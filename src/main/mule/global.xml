@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:njams="http://www.mulesoft.org/schema/mule/njams" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/njams http://www.mulesoft.org/schema/mule/njams/current/mule-njams.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+<http:listener-config name="sapi-database-httpListenerConfig" basePath="${api.basePath}">
+        <http:listener-connection host="0.0.0.0" port="${http.port}" />
+    </http:listener-config>
+	<configuration-properties doc:name="API Properties" doc:id="12b9d91d-d82a-4a9e-89a8-7d9a2afa38d1" file="properties/apiProperties.yaml" />
+	<configuration-properties doc:name="Generated Maven Properties" doc:id="12b9d91d-d82a-4a9e-89a8-7d9a2afa38d1" file="properties/generatedProperties.yaml" />
+	<configuration-properties doc:name="Environment properties" doc:id="2a5a8ef5-06ca-40dc-a2c9-7daadd7d0b45" file="properties/environment/${mule.env}Properties.yaml" />
+	<global-property doc:name="Global Property" doc:id="a049c954-10eb-4fd4-bf9e-eb7e59c21e54" name="mule.env" value="local" />
+	<configuration doc:name="Global Error Handler Configuration" doc:id="debb8bec-9ca7-452e-afb3-badc3f2df3ab" defaultErrorHandler-ref="globalErrorHandler" />
+	<configuration-properties doc:name="Log properties" doc:id="49af3598-2447-4b30-9b55-b9b934b5abef" file="properties/logProperties.yaml" />
+	<db:config name="Database_Config_User" doc:name="Database Config" doc:id="4893c14a-4bf0-45dc-a726-cf5c0955cde0" >
+		<db:my-sql-connection host="${db_config.host}" port="${db_config.port}" user="${db_config.user}" database="${db_config.db_name}" password="1234"/>
+	</db:config>
+	<njams:inline-configuration-config name="NJAMS_Inline_configuration" doc:name="NJAMS Inline configuration" doc:id="99e424f3-7af2-4c12-9680-086ed7c2bd86" domain="http://localhost:8080" deployment="/user" appName="1.0.0">
+		<njams:communication-protocol >
+			<njams:http-instance host="os0195" port="8080" path="/njams/#/main/" dataProviderPrefix="jdbc" >
+				<njams:authentication user="admin" password="admin" />
+			</njams:http-instance>
+		</njams:communication-protocol>
+		<njams:regular-expressions >
+			<njams:regular-expression key="maskSSN" value="(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}" />
+		</njams:regular-expressions>
+	</njams:inline-configuration-config>
+
+
+</mule>

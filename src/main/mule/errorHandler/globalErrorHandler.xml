@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<error-handler name="globalErrorHandler" doc:id="5cd4c5b8-604e-45d9-990a-46b8cdee7681" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="dfacd0c6-e713-41fd-ae18-a29545764810" type="APIKIT:BAD_REQUEST" >
+			<ee:transform doc:name="Transform Message" doc:id="50075165-dc75-4f04-88bd-ce9ac89cfbdc" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+				<ee:message >
+					<ee:set-payload resource="dataweaves/apikitError.dwl" />
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[400]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="e032826f-c61b-47f0-bcf1-dfc9fc6caea1" type="APIKIT:NOT_FOUND" >
+			<ee:transform doc:name="Transform Message" doc:id="e6cd1241-f962-459d-9fb1-c7cad7d7ba37" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+				<ee:message >
+					<ee:set-payload resource="dataweaves/apikitError.dwl" />
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[404]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="32661a2b-92a2-43ca-acd1-76933daeb953" type="APIKIT:METHOD_NOT_ALLOWED" >
+			<ee:transform doc:name="Transform Message" doc:id="fbd1f14a-66cc-463e-85c8-e947fa6191e8" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+				<ee:message >
+					<ee:set-payload resource="dataweaves/apikitError.dwl" />
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[405]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="ffb94215-fc5c-46e3-8b1d-bc041cdef2f2" type="APIKIT:NOT_ACCEPTABLE" >
+			<ee:transform doc:name="Transform Message" doc:id="1e21fbad-795b-492d-852c-05258e4c3c3e" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+				<ee:message >
+					<ee:set-payload resource="dataweaves/apikitError.dwl" />
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[406]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="24ae51e8-8a12-4504-a095-c51b1b2e019a" type="APIKIT:UNSUPPORTED_MEDIA_TYPE" >
+			<ee:transform doc:name="Transform Message" doc:id="2099e7c0-ce4c-4012-83d8-ae5ade6fb1c0" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+				<ee:message >
+					<ee:set-payload resource="dataweaves/apikitError.dwl" />
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[415]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="6249d7ab-3b10-43e5-9c10-ddff2c936f2b" type="APIKIT:NOT_IMPLEMENTED" >
+			<ee:transform doc:name="Transform Message" doc:id="41e0dfaa-7c0e-427b-b824-7dfc6575ee86" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+				<ee:message >
+					<ee:set-payload resource="dataweaves/apikitError.dwl" />
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[501]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="78283897-f90e-4e52-8c29-0fe7a2043bed" type="ANY" >
+			<set-variable value="#[%dw 2.0&#10;output application/java&#10;---&#10;vars.httpStatus default 500]" doc:name="Setze httpStatus" doc:id="cc4cc945-7ece-40b1-a8fc-95e4f9fdc792" variableName="httpStatus" />
+			<set-variable value='#[%dw 2.0&#10;output application/json&#10;&#10;var defaultTypes = {&#10;	"400" : "Bad Request",&#10;	"401" : "Unauthorized",&#10;	"403" : "Forbidden",&#10;	"404" : "Resource does not exists",&#10;	"405" : "Method not allowed",&#10;	"406" : "Not acceptable",&#10;	"407" : "Proxy Authentication Required",&#10;	"415" : "Unsupported Request Content Type",&#10;	"422" : "Unprocessible entity",&#10;	"429" : "Too many requests",&#10;	"500" : "Internal Server Error",&#10;	"503" : "Service Unavailable",&#10;	"504" : "Gateway Timeout"&#10;}&#10;&#10;---&#10;vars.httpStatusType default defaultTypes[(vars.httpStatus as String)]]' doc:name="Setze httpStatusType" doc:id="1ad9c259-21fd-4be5-8a72-01e158760b3b" variableName="httpStatusType" />
+			<set-variable value="#[%dw 2.0&#10;output application/json&#10;&#10;var defaultMessages = {&#10;	&quot;400&quot; : &quot;Something went wrong. Please try again.&quot;,&#10;	&quot;401&quot; : &quot;No credentials are provided or provided credentials are refused.&quot;,&#10;	&quot;403&quot; : &quot;User is not allowed to perform the requested operation.&quot;,&#10;	&quot;404&quot; : &quot;The requested URI does not map to a resource.&quot;,&#10;	&quot;405&quot; : &quot;A request was made of a resource using a request method not supported by that resource.&quot;,&#10;	&quot;406&quot; : &quot;The requested resource is only capable of generating content not acceptable according to the Accept headers sent in the request.&quot;,&#10;	&quot;407&quot; : &quot;The client must first authenticate itself with the proxy.&quot;,&#10;	&quot;415&quot; : &quot;The client sent a type of request which is not support by the requested endpoint. Check your request's Content-type machtes the requested endpoint accepted content type.&quot;,&#10;	&quot;422&quot; : &quot;The request was well-formed but was unable to be followed due to semantic errors in the input.&quot;,&#10;	&quot;429&quot; : &quot;The client has made too many requests to the API - rate limiting is applied.&quot;,&#10;	&quot;500&quot; : &quot;Server side exception occured.&quot;,&#10;	&quot;503&quot; : &quot;The server is currently unavailable (because it is overloaded or down for maintenance).&quot;,&#10;	&quot;504&quot; : &quot;The server was acting as a gateway or proxy and did not receive a timely response from the upstream server.&quot;&#10;}&#10;&#10;---&#10;vars.httpStatusMessage default defaultMessages[(vars.httpStatus as String)]]" doc:name="Setze httpStatusMessage" doc:id="35d7cf4c-1c3c-4375-ba30-e33dfa02b622" variableName="httpStatusMessage" />
+			<set-variable value='#[%dw 2.0&#10;output application/json&#10;---&#10;vars.httpStatusDetails default ""]' doc:name="Setze httpStatusDetails" doc:id="c18f612a-1419-486e-852e-0c47b38c7c56" variableName="httpStatusDetails" />
+			<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	"code": vars.httpStatus,&#10;	"type": vars.httpStatusType,&#10;	"message": vars.httpStatusMessage,&#10;	"details": vars.httpStatusDetails,&#10;	"correlationId": correlationId,&#10;}]' doc:name="Setze Payload" doc:id="86e49616-421b-4a8c-8a29-7e89032610a4" />
+			<logger level="DEBUG" doc:name="Logge FlowEnde Payload" doc:id="16042f3e-14fd-44fb-9a05-c15337b9aa4d" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" category="${log.baseCategory}.globalErrorHandler.globalErrorHandler.any.flowEndePayload" />
+		</on-error-propagate>
+	
+
+</error-handler>
+</mule>
